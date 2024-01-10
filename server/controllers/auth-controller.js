@@ -11,6 +11,7 @@ const home = async (req, res) => {
 	}
 };
 
+// User Register logic
 const register = async (req, res) => {
 	try {
 		const { username, email, phone, password } = req.body;
@@ -35,5 +36,29 @@ const register = async (req, res) => {
 		res.status(500).send({ msg: "Internal server error !" });
 	}
 };
+// User Login logic
+const login = async (req, res) => {
+	try {
+		const { email, password } = req.body;
+		const userExist = await User.findOne({ email });
+		if (!userExist) {
+			return res.status(400).json({ msg: "Invalid Credentials" });
+		}
 
-module.exports = { home, register };
+		const user = await bcrypt.compare(password, userExist.password);
+
+		if (user) {
+			res.status(200).json({
+				msg: "Login successful",
+				token: await userExist.generateToken(),
+				userId: userExist._id.toString(),
+			});
+		} else {
+			res.status(401).json({ msg: "Invalid Credentials" });
+		}
+	} catch (error) {
+		res.status(500).send({ msg: "Internal server error !", error });
+	}
+};
+
+module.exports = { home, register, login };
