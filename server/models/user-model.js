@@ -27,6 +27,11 @@ userSchema.pre("save", async function (next) {
 	}
 });
 
+// Compare password for Login
+userSchema.methods.comparePassword = async function (password) {
+	return bcrypt.compare(password, this.password);
+};
+
 // json web token
 userSchema.methods.generateToken = async function () {
 	try {
@@ -43,6 +48,9 @@ userSchema.methods.generateToken = async function () {
 		console.error(error);
 	}
 };
+
+
+
 // define the model or the collection name
 const User = new mongoose.model("User", userSchema);
 module.exports = User;
