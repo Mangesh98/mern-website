@@ -1,0 +1,31 @@
+# Node.js
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Optional - build output
+public/
+
+# Optional - dotenv environment variable files
+.env
+
+# Optional - editor configuration
+.vscode/
+.idea/
+
+# Optional - local configuration
+config/local.json
+
+# Optional - macOS
+.DS_Store
+
+
