@@ -17,22 +17,22 @@ const register = async (req, res) => {
 
 		const userExist = await User.findOne({ email });
 		if (userExist) {
-			return res.status(400).json({ msg: "email already exists" });
+			return res.status(400).json({ msg: "Email already exists" });
 		}
-
-		// hash the password
-		const saltRound = 10;
-		const hash_password = await bcrypt.hash(password, saltRound);
 
 		const userCreated = await User.create({
 			username,
 			email,
 			phone,
-			password: hash_password,
+			password,
 		});
-		res.status(200).json({ message: userCreated });
+		res.status(201).json({
+			msg: "Registration successful",
+			token: await userCreated.generateToken(),
+			userId: userCreated._id.toString(),
+		});
 	} catch (error) {
-		res.status(500).send({ msg: "internal server error !" });
+		res.status(500).send({ msg: "Internal server error !" });
 	}
 };
 
