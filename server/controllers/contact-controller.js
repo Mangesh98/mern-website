@@ -7,6 +7,7 @@ const contactForm = async (req, res) => {
 		return res.status(200).json({ messege: "Messege send successfully" });
 	} catch (error) {
 		return res.status(500).json({ messege: "message not delivered" });
+		// next(error);
 	}
 };
 

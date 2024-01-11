@@ -1,4 +1,4 @@
-const validate = (schema) => async (req, res, next) => {
+const formValidate = (schema) => async (req, res, next) => {
 	try {
 		const parseBody = await schema.parseAsync(req.body);
 		req.body = parseBody;
@@ -6,7 +6,8 @@ const validate = (schema) => async (req, res, next) => {
 	} catch (err) {
 		const status = 400;
 		const message = "Fill the input properly";
-		const extraDetails = err.errors[0].message;
+		// const extraDetails = err.errors[0].message;
+		const extraDetails = err.errors.map((error) => error.message).join(", ");
 
 		const error = {
 			status,
@@ -17,4 +18,4 @@ const validate = (schema) => async (req, res, next) => {
 	}
 };
 
-module.exports = validate;
+module.exports = formValidate;
