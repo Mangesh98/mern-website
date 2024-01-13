@@ -6,6 +6,10 @@ const authRoute = require("./router/auth-router");
 const connectDb = require("./utils/db");
 const errorMiddleware = require("./middlewares/error-middleware");
 const contactRoute = require("./router/contact-router");
+const cors = require("cors");
+
+// let's tackle cors
+app.use(cors);
 
 app.use(express.json());
 
