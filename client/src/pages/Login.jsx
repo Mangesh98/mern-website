@@ -10,7 +10,7 @@ export const Login = () => {
 	});
 
 	const navigate = useNavigate();
-	const {storeTokenInLS} = useAuth();
+	const { storeTokenInLS } = useAuth();
 
 	const handleInput = (e) => {
 		let name = e.target.name;
