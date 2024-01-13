@@ -1,14 +1,21 @@
-import { Analytics } from "../components/Analytics"; 
+import { Analytics } from "../components/Analytics";
+import { useAuth } from "../store/auth";
 
 export const About = () => {
+	const { user } = useAuth();
+
 	return (
 		<>
 			<main>
 				<section className="section-hero">
 					<div className="container grid grid-two-cols">
 						<div className="hero-content">
-							<p>We are the World Best IT Company</p>
-							<h1>Welcome to Mangesh Technical</h1>
+							{/* <p>We are the World Best IT Company</p> */}
+							<p>
+								Welcome,{" "}
+								{user ? `${user.username} to our website` : `to our website`}
+							</p>
+							<h1>Why Choose Us</h1>
 							<p>
 								Expertise: Our team consists of experienced IT professionals who
 								are passionate about staying up-to-date with the latest industry
@@ -56,7 +63,6 @@ export const About = () => {
 			</main>
 			{/* 2nd section  */}
 			<Analytics />
-			
 		</>
 	);
 };
