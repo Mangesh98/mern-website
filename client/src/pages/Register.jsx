@@ -37,8 +37,9 @@ export const Register = () => {
 				},
 				body: JSON.stringify(user),
 			});
+			const res_data = await response.json();
+			console.log(res_data);
 			if (response.ok) {
-				const res_data = await response.json();
 				storeTokenInLS(res_data.token);
 				setUser({
 					username: "",
@@ -48,7 +49,7 @@ export const Register = () => {
 				});
 				navigate("/login");
 			} else {
-				alert("Invalid Credential");
+				alert(res_data.extraDetails ? res_data.extraDetails:res_data.message);
 			}
 		} catch (error) {
 			console.log("Register", error);

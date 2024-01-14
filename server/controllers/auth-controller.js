@@ -7,7 +7,7 @@ const home = async (req, res) => {
 	try {
 		res.status(200).send("Welcome to Home Page ! using Controller ");
 	} catch (error) {
-		res.status(400).send({ msg: "Page not found !" });
+		res.status(400).send({ message: "Page not found !" });
 	}
 };
 
@@ -18,7 +18,7 @@ const register = async (req, res) => {
 
 		const userExist = await User.findOne({ email });
 		if (userExist) {
-			return res.status(400).json({ msg: "Email already exists" });
+			return res.status(400).json({ message: "Email already exists" });
 		}
 
 		const userCreated = await User.create({
@@ -28,12 +28,12 @@ const register = async (req, res) => {
 			password,
 		});
 		res.status(201).json({
-			msg: "Registration successful",
+			message: "Registration successful",
 			token: await userCreated.generateToken(),
 			userId: userCreated._id.toString(),
 		});
 	} catch (error) {
-		res.status(500).send({ msg: "Internal server error !" });
+		res.status(500).send({ message: "Internal server error !" });
 	}
 };
 // User Login logic
@@ -42,7 +42,7 @@ const login = async (req, res) => {
 		const { email, password } = req.body;
 		const userExist = await User.findOne({ email });
 		if (!userExist) {
-			return res.status(400).json({ msg: "Invalid Credentials" });
+			return res.status(400).json({ message: "Invalid Credentials" });
 		}
 
 		// const user = await bcrypt.compare(password, userExist.password);
@@ -50,15 +50,15 @@ const login = async (req, res) => {
 
 		if (user) {
 			res.status(200).json({
-				msg: "Login successful",
+				message: "Login successful",
 				token: await userExist.generateToken(),
 				userId: userExist._id.toString(),
 			});
 		} else {
-			res.status(401).json({ msg: "Invalid Credentials" });
+			res.status(401).json({ message: "Invalid Credentials" });
 		}
 	} catch (error) {
-		res.status(500).send({ msg: "Internal server error !", error });
+		res.status(500).send({ message: "Internal server error !", error });
 	}
 };
 
