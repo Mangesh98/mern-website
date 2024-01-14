@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../store/auth";
+import { toast } from "react-toastify";
 
 const URL = "http://localhost:5000/api/form/contact";
 export const Contact = () => {
@@ -40,16 +41,21 @@ export const Contact = () => {
 				},
 				body: JSON.stringify(contact),
 			});
+			const responseData = await response.json();
+			// console.log(responseData);
 			if (response.ok) {
 				setContact({
 					...contact,
 					message: "",
 				});
-				const responseData = await response.json();
-				alert(responseData.message);
+				toast.success(responseData.message);
 				// console.log(responseData);
 			} else {
-				console.error("API Error:", response.status, response.statusText);
+				toast.error(
+					responseData.extraDetails
+						? responseData.extraDetails
+						: responseData.message
+				);
 			}
 			// console.log(response);
 		} catch (error) {
