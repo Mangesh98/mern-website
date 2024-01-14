@@ -50,7 +50,7 @@ export const Register = () => {
 					password: "",
 				});
 
-				navigate("/login");
+				navigate("/");
 			} else {
 				toast(res_data.extraDetails ? res_data.extraDetails:res_data.message);
 			}
