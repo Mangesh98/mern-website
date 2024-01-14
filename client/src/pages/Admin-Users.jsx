@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../store/auth";
+import { toast } from "react-toastify";
 
 export const AdminUsers = () => {
 	const [users, setUsers] = useState([]);
@@ -24,8 +25,36 @@ export const AdminUsers = () => {
 			console.log(error);
 		}
 	};
+	const deleteUser = async (id, username) => {
+		const shouldDelete = window.confirm(
+			`Are you sure you want to delete ${username}?`
+		);
+		if (shouldDelete) {
+			try {
+				const URL = `http://localhost:5000/api/admin//users/delete/${id}`;
+				const response = await fetch(URL, {
+					method: "DELETE",
+					headers: {
+						Authorization: authorizationToken,
+					},
+				});
+				let message = await response.json();
+				message = message.message;
+				if (response.ok) {
+					toast.success(message);
+					// alert(message);
+					getAllUsersData();
+				} else {
+					toast.error(message);
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	};
 	useEffect(() => {
 		getAllUsersData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
@@ -48,13 +77,16 @@ export const AdminUsers = () => {
 					</thead>
 					<tbody>
 						{users.map((curUser, index) => {
+							let { username, email, phone, _id } = curUser;
 							return (
 								<tr key={index}>
-									<td>{curUser.email}</td>
-									<td>{curUser.phone}</td>
-									<td>{curUser.username}</td>
+									<td>{email}</td>
+									<td>{phone}</td>
+									<td>{username}</td>
 									<td>Edit</td>
-									<td>Delete</td>
+									<td>
+										<button onClick={() => deleteUser(_id,username)}>Delete</button>
+									</td>
 								</tr>
 							);
 						})}
