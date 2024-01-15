@@ -6,9 +6,11 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 	const [token, setToken] = useState(localStorage.getItem("token"));
 	const [user, setUser] = useState("");
-	const [services, setServices] = useState("");
+	const [services, setServices] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const authorizationToken = `Bearer ${token}`;
+
+	const API = import.meta.env.VITE_APP_URI_API;
 
 	//function to stored the token in local storage
 	const storeTokenInLS = (serverToken) => {
@@ -32,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 	const userAuthentication = async () => {
 		try {
 			setIsLoading(true);
-			const response = await fetch("http://localhost:5000/api/auth/user", {
+			const response = await fetch(`${API}/api/auth/user`, {
 				method: "GET",
 				headers: {
 					Authorization: authorizationToken,
@@ -56,7 +58,8 @@ export const AuthProvider = ({ children }) => {
 	// fetch the services data from the database
 	const getServices = async () => {
 		try {
-			const response = await fetch(`http://localhost:5000/api/data/service`, {
+			// console.log(API);
+			const response = await fetch(`${API}/api/data/service`, {
 				method: "GET",
 			});
 			if (response.ok) {
@@ -85,6 +88,7 @@ export const AuthProvider = ({ children }) => {
 				services,
 				authorizationToken,
 				isLoading,
+				API,
 			}}
 		>
 			{children}

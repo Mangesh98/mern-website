@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 export const AdminContacts = () => {
 	const [contacts, setContacts] = useState([]);
 
-	const { authorizationToken } = useAuth();
-	const URL = "http://localhost:5000/api/admin/contacts";
+	const { authorizationToken,API } = useAuth();
+	const URL = `${API}/api/admin/contacts`;
 	const getAllContactsData = async () => {
 		try {
 			const response = await fetch(URL, {
@@ -31,7 +31,7 @@ export const AdminContacts = () => {
 		);
 		if (shouldDelete) {
 			try {
-				const URL = `http://localhost:5000/api/admin/contacts/delete/${id}`;
+				const URL = `${API}/api/admin/contacts/delete/${id}`;
 				const response = await fetch(URL, {
 					method: "DELETE",
 					headers: {

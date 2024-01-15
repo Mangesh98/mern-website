@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
 import { useParams, useNavigate } from "react-router-dom";
-
 export const AdminUpdate = () => {
+	const { authorizationToken,API } = useAuth();
+	
 	const [userData, setUserData] = useState({
 		username: "",
 		email: "",
@@ -29,7 +30,7 @@ export const AdminUpdate = () => {
 		try {
 			// console.log(userData);
 			const response = await fetch(
-				`http://localhost:5000/api/admin/users/update/${params.id}`,
+				`${API}/api/admin/users/update/${params.id}`,
 				{
 					method: "PATCH",
 					headers: {
@@ -55,12 +56,12 @@ export const AdminUpdate = () => {
 	};
 
 	const params = useParams();
-	const { authorizationToken } = useAuth();
+	
 	const getSingleUserData = async () => {
 		try {
 			// const { id } = useParams();
 			const response = await fetch(
-				`http://localhost:5000/api/admin/users/${params.id}`,
+				`${API}/api/admin/users/${params.id}`,
 				{
 					method: "GET",
 					headers: {

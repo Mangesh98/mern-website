@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
 
-const URL = "http://localhost:5000/api/form/contact";
 export const Contact = () => {
 	const [contact, setContact] = useState({
 		username: "",
@@ -10,7 +9,9 @@ export const Contact = () => {
 		message: "",
 	});
 	const [userData, setUserData] = useState(true);
-	const { user } = useAuth();
+	const { user,API } = useAuth();
+
+	const URL = `${API}/api/form/contact`;
 	// console.log(user.user);
 
 	if (user && userData) {
