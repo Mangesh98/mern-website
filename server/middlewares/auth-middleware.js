@@ -31,4 +31,5 @@ const authMiddleware = async (req, res, next) => {
 			.json({ message: "Unauthorized HTTP, Token not provided" });
 	}
 };
+
 module.exports = authMiddleware;

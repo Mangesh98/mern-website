@@ -1,7 +1,18 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, Navigate } from "react-router-dom";
 import { FaHome, FaRegListAlt, FaUser } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
+import { useAuth } from "../../store/auth";
+import { toast } from "react-toastify";
 export const AdminLayout = () => {
+	const { user, isLoading } = useAuth();
+	if (isLoading) {
+		return <h1>Loading...</h1>;
+	}
+	if (!user.isAdmin) {
+		toast.error("Not valid user !");
+		// console.log(user);
+		return <Navigate to="/a" />;
+	}
 	return (
 		<>
 			<header>
@@ -20,7 +31,7 @@ export const AdminLayout = () => {
 								</NavLink>
 							</li>
 							<li>
-								<NavLink to="/services">
+								<NavLink to="/service">
 									<FaMessage /> Services
 								</NavLink>
 							</li>
@@ -38,3 +49,4 @@ export const AdminLayout = () => {
 		</>
 	);
 };
+	

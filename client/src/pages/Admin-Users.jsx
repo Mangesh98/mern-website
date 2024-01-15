@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export const AdminUsers = () => {
 	const [users, setUsers] = useState([]);
@@ -31,7 +32,7 @@ export const AdminUsers = () => {
 		);
 		if (shouldDelete) {
 			try {
-				const URL = `http://localhost:5000/api/admin//users/delete/${id}`;
+				const URL = `http://localhost:5000/api/admin/users/delete/${id}`;
 				const response = await fetch(URL, {
 					method: "DELETE",
 					headers: {
@@ -80,12 +81,16 @@ export const AdminUsers = () => {
 							let { username, email, phone, _id } = curUser;
 							return (
 								<tr key={index}>
+									<td>{username}</td>
 									<td>{email}</td>
 									<td>{phone}</td>
-									<td>{username}</td>
-									<td>Edit</td>
 									<td>
-										<button onClick={() => deleteUser(_id,username)}>Delete</button>
+										<Link to={`/admin/users/${_id}`}>Edit</Link>
+									</td>
+									<td>
+										<button onClick={() => deleteUser(_id, username)}>
+											Delete
+										</button>
 									</td>
 								</tr>
 							);

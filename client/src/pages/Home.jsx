@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { Analytics } from "../components/Analytics";
 
 export const Home = () => {
@@ -17,12 +18,12 @@ export const Home = () => {
 								solutions tailored to meet your unique needs.
 							</p>
 							<div className="btn btn-group">
-								<a href="/contact">
+								<NavLink to="/contact">
 									<button className="btn">connect now</button>
-								</a>
-								<a href="/services">
+								</NavLink>
+								<NavLink to="/service">
 									<button className="btn secondary-btn">learn more</button>
-								</a>
+								</NavLink>
 							</div>
 						</div>
 
@@ -65,12 +66,12 @@ export const Home = () => {
 							in the digital age.
 						</p>
 						<div className="btn btn-group">
-							<a href="/contact">
+							<NavLink to="/contact">
 								<button className="btn">connect now</button>
-							</a>
-							<a href="/service">
+							</NavLink>
+							<NavLink to="/service">
 								<button className="btn secondary-btn">learn more</button>
-							</a>
+							</NavLink>
 						</div>
 					</div>
 				</div>
